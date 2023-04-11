@@ -1,0 +1,142 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입 화면</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script>
+    function idDoubleCheck() {
+    let user_id = $('#user_id').val();
+    if( !user_id ) {
+    alert('아이디를 입력하세요~');
+    return;
+    }
+
+    //let parameter = { 'user_id': user_id };
+    //ajax통신
+    $.ajax({
+      url: 'http://localhost:8080/idDoubleCheckAjax?user_id='+user_id,
+      type: 'get',
+      //data: parameter,
+      success: function(response){
+       console.log('통신성공: response:' + response);
+       if( response == '1'){ //1 중복됨
+       alert('아이디가 중복됩니다.')
+       $('#id_double_checked').val('no');
+
+       }else{ //0 중복안됨
+       alert('아이디가 사용가능합니다.')
+       $('#id_double_checked').val('yse');
+
+       }
+       },
+      error: function(){
+       alert('통신실패');
+       }
+    });
+
+    $('#id_double_checked').val('yes');
+
+    }
+	function checkValue() {
+	let val_idDoubleChecked = $('#id_double_checked').val();
+	console.log( 'val_idDoubleChecked:' + val_idDoubleChecked );
+
+	    if( val_idDoubleChecked == 'no' ) {
+	    alert('아이디 중복확인을 해주세요~');
+	    return false;
+	    }
+
+
+        return true; // 유효성체크 안함.
+
+		if(!document.userInfo.user_id.value) { //empty: null, 길이 0
+			alert("아이디을 입력해주세요");
+			document.getElementById('user_id').focus();
+			return false; //submit전송이 안됨
+		}
+		if(!document.userInfo.user_pw.value) {
+			alert("비밀번호를 입력해주세요");
+			document.getElementById('user_pw').focus();
+			return false;
+		}
+		if(!document.userInfo.user_name.value) {
+			alert("이름를 입력해주세요");
+			document.getElementById('user_name').focus();
+			return false;
+		}
+		if(!document.userInfo.user_role.value) {
+			alert("사용자권한을 입력해주세요");
+			document.getElementById('user_role').focus();
+			return false;
+		}
+		if(!document.userInfo.joindate.value) {
+			alert("가입날짜를 입력해주세요");
+			document.getElementById('joindate').focus();
+			return false;
+		}
+
+		return true;
+	}
+
+
+    </script>
+</head>
+<body>
+
+<h1>회원가입 화면</h1>
+
+<form action="joinAction" method="post" name="userInfo" onsubmit="return checkValue();">
+
+    <table border="1">
+        <tr>
+            <td>아이디</td>
+            <td>
+                <input type="text" name="user_id" id="user_id" maxlength="20"/>
+                <button type="button" onclick="idDoubleCheck();">중복확인</button>
+                <input type="hidden" name="id_double_checked" id="id_double_checked"
+                       value="no">
+            </td>
+        </tr>
+        <tr>
+            <td>비번</td>
+            <td>
+                <input type="text" name="user_pw" id="user_pw" maxlength="20"/>
+            </td>
+        </tr>
+        <tr>
+            <td>이름</td>
+            <td>
+                <input type="text" name="user_name" id="user_name" maxlength="50"/>
+            </td>
+        </tr>
+        <tr>
+            <td>가입일자</td>
+            <td>
+                <input type="date" name="joindate" id="joindate"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>권한</td>
+            <td>
+                <select name="user_role" required>
+                    <option selected>권한을 선택해주세요</option>
+                    <option value="ROLE_USER" selected>회원</option>
+                    <option value="ROLE_ADMIN">관리자</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" value="회원가입"/>
+            </td>
+        </tr>
+    </table>
+
+</form>
+
+</body>
+</html>
+</html>

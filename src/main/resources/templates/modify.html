@@ -1,0 +1,82 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>회원정보 보기/수정</title>
+    <script>
+	function checkValue() {
+
+		if(!document.userInfo.custname.value) { //empty: null, 길이 0
+			alert("이름을 입력해주세요");
+			document.getElementById('custname').focus();
+			return false; //submit전송이 안됨
+		}
+		if(!document.userInfo.phone.value) {
+			alert("폰번호를 입력해주세요");
+			document.getElementById('phone').focus();
+			return false;
+		}
+		if(!document.userInfo.address.value) {
+			alert("주소를 입력해주세요");
+			document.getElementById('address').focus();
+			return false;
+		}
+		if(!document.userInfo.joindate.value) {
+			alert("가입날짜를 입력해주세요");
+			document.getElementById('joindate').focus();
+			return false;
+		}
+		return true;
+	}
+
+</script>
+</head>
+<body>
+
+<h1>회원정보 보기/수정</h1>
+
+<form action="modifyAction" method="post" name="userInfo" onsubmit="return checkValue();">
+    <input type="hidden" name="user_role" id="user_role" th:value="${ member.user_role }" />
+    <table border="1">
+        <tr>
+            <td>ID</td>
+            <td>
+                <input type="text" name="id" id="id" maxlength="10" th:value="${ member.id }" readonly />
+            </td>
+        </tr>
+        <tr>
+            <td>아이디</td>
+            <td>
+                <input type="text" name="user_id" id="user_id" th:value="${ member.user_id }" maxlength="20" />
+            </td>
+        </tr>
+        <tr>
+            <td>비번</td>
+            <td>
+                <input type="text" name="user_pw" id="user_pw" th:value="${ member.user_pw }" maxlength="20" />
+            </td>
+        </tr>
+        <tr>
+            <td>이름</td>
+            <td>
+                <input type="text" name="user_name" id="user_name" th:value="${ member.user_name }" maxlength="50" />
+            </td>
+        </tr>
+        <tr>
+            <td>가입일</td>
+            <td>
+                <input type="date" name="joindate" id="joindate" th:value="|${member.joindate}|" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" value="회원정보수정" />
+                <button formaction="/admin"> 회원목록</button>
+            </td>
+        </tr>
+    </table>
+
+</form>
+
+</body>
+</html>
