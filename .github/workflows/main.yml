@@ -2,7 +2,7 @@ env:
   S3_BUCKET_NAME: actions-deploy-bucket-kjt # 내가 설정한 S3 버킷 이름
   PROJECT_NAME: ec2-loginjoindb # 내 Git Hub 프로젝트 이름
   CODE_DEPLOY_APP_NAME: ec2-loginjoindb-codedeploy-app         #(15)
-  CODE_DEPLOY_GROUP_NAME: ec2-loginjoindb-codedeploy-app-group
+  CODE_DEPLOY_GROUP_NAME: ec2-loginjoindb-codeploy-app-group
   
 name: deploy # (0) GitHub Action에서 보여질 이름을 지정합니다. 
 
