@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.study'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0-SNAPSHOT'
 sourceCompatibility = '17'
 
 configurations {
@@ -18,10 +18,15 @@ repositories {
 	mavenCentral()
 }
 
+jar {
+	enabled = false
+}
+
+//archiveFileName = 'ec2-loginjoindb'+ new Date().format("yyyyMMddHHmmss") + '.jar'
 bootJar{
 	archivesBaseName = 'ec2-loginjoindb'
 	archiveFileName = 'ec2-loginjoindb.jar'
-	archiveVersion = "0.1.0"
+	archiveVersion = "1.0.0"
 }
 
 dependencies {

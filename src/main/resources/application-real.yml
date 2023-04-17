@@ -1,0 +1,64 @@
+# nginx 무중단 배포용 - 실서버용 real1, real2
+
+# default
+spring:
+  profiles:
+    active: real1 # 활성 프로필 설정
+  # 또는 java 실행시 -D옵션으로 설정할 수도 있음.
+  # ex) $ java -jar -Dspring.profiles.active=real1 demo-0.0.1-SNAPSHOT.jar
+
+---
+spring:
+  config:
+    activate:
+      on-profile: real1  # real1 프로필 활성화시 아래의 환경설정이 적용된다.
+# 기타 설정 ..
+server:
+  port: 8081    # 프로필마다 포트번호 다르게 설정
+
+  datasource:
+  driver-class-name: org.mariadb.jdbc.Driver
+  hikari:
+    jdbc-url: jdbc:mariadb://:3306/mydb?characterEncoding=UTF-8&serverTimezone=UTC
+  username: root
+  password: 12345678
+
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+    show-sql: true
+
+logging:
+  level:
+    org:
+      hibernate: info
+
+---
+spring:
+  config:
+    activate:
+      on-profile: real2    # real2 프로필 선택시 아래의 환경설정이 적용된다.
+
+server:
+  port: 8082    # 프로필마다 포트번호 다르게 설정
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    hikari:
+      jdbc-url: jdbc:mariadb://database-ec2-loginjoindb.cpqilec1sptp.ap-northeast-2.rds.amazonaws.com:3306/mydb?characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 12345678
+
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+    show-sql: true
+
+logging:
+  level:
+    org:
+      hibernate: info
